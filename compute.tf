@@ -24,6 +24,10 @@ resource "aws_instance" "wazuh_server" {
   # 1단계의 퍼블릭 서브넷과 2단계의 보안 그룹을 연결
   subnet_id              = aws_subnet.wazuh_public_subnet.id
   vpc_security_group_ids = [aws_security_group.wazuh_sg.id]
+
+  # ⭐ 방금 만든 키페어 이름을 서버에 등록 (이 줄을 추가하세요!)
+  key_name = aws_key_pair.wazuh_keypair.key_name
+
   # 외부에서 인터넷으로 접속하기 위해 공인 IP 할당을 활성화
   associate_public_ip_address = true
 
