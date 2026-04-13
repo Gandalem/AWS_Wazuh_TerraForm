@@ -18,7 +18,7 @@
     * 외부 통신을 제어하는 보안 그룹(Security Group)
     * 개방 포트: `22` (SSH), `443` (Dashboard), `1514` (Agent Log), `1515` (Agent Enrollment), `55000` (API)
 3. **Compute (`compute.tf`)**
-    * 최신 Ubuntu 22.04 LTS (자동 검색 적용)
+    * 최신 Ubuntu 20.04 LTS (자동 검색 적용)
     * `t3.medium` 인스턴스 (Wazuh 권장 최소 사양) 및 공인 IP 자동 할당
 
 ---
