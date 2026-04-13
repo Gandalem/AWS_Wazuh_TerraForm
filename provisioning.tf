@@ -42,8 +42,11 @@ resource "null_resource" "wazuh_complete_setup" {
       "set -e",
       "echo '=== [3/3] Nginx 및 ModSecurity 설치 ==='",
       "sudo apt-get update -y",
-      "sudo apt-get install -y software-properties-common",
-      "sudo add-apt-repository ppa:digitalwave/nginx -y", # ModSecurity 지원 PPA 추가
+      "curl -fsSL https://modsecurity.digitalwave.hu/archive.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/digitalwave-modsecurity.gpg",
+      "echo \"deb [signed-by=/usr/share/keyrings/digitalwave-modsecurity.gpg] http://modsecurity.digitalwave.hu/ubuntu/ jammy main\" | sudo tee /etc/apt/sources.list.d/dwmodsec.list",
+      "echo \"deb [signed-by=/usr/share/keyrings/digitalwave-modsecurity.gpg] http://modsecurity.digitalwave.hu/ubuntu/ jammy-backports main\" | sudo tee -a /etc/apt/sources.list.d/dwmodsec.list",
+      "sudo bash -c 'echo -e \"Package: *nginx*\\nPin: origin modsecurity.digitalwave.hu\\nPin-Priority: 900\" > /etc/apt/preferences.d/99-digitalwave'",
+      "sudo bash -c 'echo -e \"Package: *modsecurity*\\nPin: origin modsecurity.digitalwave.hu\\nPin-Priority: 900\" >> /etc/apt/preferences.d/99-digitalwave'",
       "sudo apt-get update -y",
       "sudo apt-get install -y nginx libnginx-mod-http-modsecurity",
       "sudo systemctl enable nginx",
