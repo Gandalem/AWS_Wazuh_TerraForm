@@ -36,3 +36,44 @@
 ```bash
 aws configure
 # Access Key, Secret Key, region(ap-northeast-2), format(json) 입력
+```
+
+---
+
+## 🚀 실행 가이드 (Quick Start)
+
+1. **초기화 및 실행 계획 확인**
+   ```bash
+   terraform init
+   terraform plan
+   ```
+2. **인프라 셋업 및 프로비저닝 (Wazuh & WAF 자동 설치)**
+   ```bash
+   terraform apply
+   ```
+   > ⏳ **참고:** EC2 인스턴스가 생성된 후 `remote-exec` 쉘 스크립트를 통해 Wazuh 통합 패키지와 Nginx ModSecurity(WAF)가 순차적으로 다운로드 및 설치됩니다. 이 과정은 약 5~10분 정도 소요됩니다.
+
+3. **접속 주소 확인**
+   설치가 완료되면 터미널 출력(Outputs)에 대시보드 접근 주소와 API 주소가 표시됩니다.
+   ```bash
+   Apply complete! ...
+   Outputs:
+   wazuh_dashboard_url = "https://<서버의_공인IP>"
+   ```
+
+---
+
+## 🆘 트러블슈팅 가이드 (Troubleshooting)
+
+프로비저닝 도중 SSH 접속이 끊기거나 패키지 다운로드 에러로 설치 로직(`remote-exec`)이 실패했을 경우, 엄격한 하네스 룰(`set -e`)에 의해 스크립트가 즉시 중단됩니다. 
+
+이 경우 오염된 좀비 상태의 서버에서 재시도하기보다는, 사이드 이펙트를 차단하기 위해 **해당 인스턴스를 파괴하고 처음부터 깨끗하게 다시 설치(Clean Room 방식)** 하는 것을 강력히 권장합니다.
+
+**설치 에러 발생 시 초기화 및 재구축 명령어:**
+```bash
+# 1. 꼬여버린 기존 EC2 인스턴스를 날리고 새 서버에서 스크립트를 재시작
+terraform apply -replace="aws_instance.wazuh_server"
+
+# 2. 모든 자원을 완전히 삭제하고 싶을 때
+terraform destroy
+```
