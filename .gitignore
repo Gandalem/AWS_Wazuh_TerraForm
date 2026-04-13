@@ -1,0 +1,43 @@
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files (Contains sensitive infrastructure data)
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Exclude all .tfvars files
+*.tfvars
+*.tfvars.json
+
+# Ignore override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore tfplan outputs
+*tfplan*
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+# --- 인프라 및 보안 자격 증명 (민감 파일) ---
+# 프라이빗 키 (Private Keys)
+*.pem
+*.key
+
+# 기타 중요 설정 및 크리덴셜 파일
+*_credentials.txt
+*credentials*.txt
+.env
+
+# --- IDE 및 시스템 설정 ---
+.idea/
+*.iml
+.DS_Store
+.agents/
