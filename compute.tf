@@ -16,7 +16,7 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "wazuh_server" {
   # 위에서 자동으로 찾은 최신 우분투 이미지의 ID를 여기에 쏙 넣습니다.
-  ami           = data.aws_ami.ubuntu.id
+  ami = data.aws_ami.ubuntu.id
 
   # Wazuh는 메모리 사용량이 많아 t3.medium 이상을 강력히 권장합니다.
   instance_type = "t3.large" #dashboard 배포시 메모리 용량 부족으로 확장

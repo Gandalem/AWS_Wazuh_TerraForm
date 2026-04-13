@@ -17,6 +17,7 @@ resource "null_resource" "waf_reverse_proxy_setup" {
 
   provisioner "remote-exec" {
     inline = [
+      "set -e",
       "echo '=== [1/4] Nginx용 HTTPS 자체 서명 인증서 생성 ==='",
       "sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj '/C=KR/ST=Seoul/L=Seoul/O=Security/OU=IT/CN=wazuh-waf'",
 

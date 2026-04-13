@@ -13,7 +13,7 @@ resource "aws_vpc" "wazuh_vpc" {
 resource "aws_subnet" "wazuh_public_subnet" {
   vpc_id                  = aws_vpc.wazuh_vpc.id
   cidr_block              = "10.0.1.0/24"
-  map_public_ip_on_launch = true # 여기에 띄우는 서버는 자동으로 공인 IP 부여
+  map_public_ip_on_launch = true              # 여기에 띄우는 서버는 자동으로 공인 IP 부여
   availability_zone       = "ap-northeast-2a" # 서울 리전의 a 가용 영역
 
   tags = {
