@@ -1,11 +1,11 @@
-# 최신 Ubuntu 20.04 LTS AMI 이미지를 AWS에서 자동으로 검색해서 가져오는 코드
+# 최신 Ubuntu 22.04 LTS AMI 이미지를 AWS에서 자동으로 검색해서 가져오는 코드
 data "aws_ami" "ubuntu" {
   most_recent = true
   owners      = ["099720109477"] # Canonical (Ubuntu 공식 배포자 ID)
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
   }
 
   filter {

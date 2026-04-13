@@ -41,7 +41,9 @@ resource "null_resource" "wazuh_complete_setup" {
     inline = [
       "set -e",
       "echo '=== [3/3] Nginx 및 ModSecurity 설치 ==='",
-      "sudo add-apt-repository universe -y", # 확장 패키지 저장소 활성화 (추가됨!)
+      "sudo apt-get update -y",
+      "sudo apt-get install -y software-properties-common",
+      "sudo add-apt-repository ppa:digitalwave/nginx -y", # ModSecurity 지원 PPA 추가
       "sudo apt-get update -y",
       "sudo apt-get install -y nginx libnginx-mod-http-modsecurity",
       "sudo systemctl enable nginx",
