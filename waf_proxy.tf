@@ -23,7 +23,10 @@ resource "null_resource" "waf_reverse_proxy_setup" {
 
       "echo '=== [2/4] ModSecurity WAF 엔진 스위치 ON ==='",
       "sudo mkdir -p /etc/nginx/modsec",
-      "sudo cp /etc/modsecurity/modsecurity.conf-recommended /etc/nginx/modsec/modsecurity.conf || echo 'No recommended conf found'",
+      "sudo curl -sSLO http://raw.githubusercontent.com/SpiderLabs/ModSecurity/v3/master/modsecurity.conf-recommended",
+      "sudo mv modsecurity.conf-recommended /etc/nginx/modsec/modsecurity.conf",
+      "sudo curl -sSLO http://raw.githubusercontent.com/SpiderLabs/ModSecurity/v3/master/unicode.mapping",
+      "sudo mv unicode.mapping /etc/nginx/modsec/",
       "sudo sed -i 's/SecRuleEngine DetectionOnly/SecRuleEngine On/' /etc/nginx/modsec/modsecurity.conf",
       "sudo bash -c 'echo \"Include /etc/nginx/modsec/modsecurity.conf\" > /etc/nginx/modsec/main.conf'",
 
